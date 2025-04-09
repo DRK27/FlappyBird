@@ -1,6 +1,5 @@
-package org.example.org.example
+package org.example
 
-import org.example.GameLogic
 import java.awt.Color
 import java.awt.Graphics
 import javax.swing.JPanel
@@ -11,30 +10,27 @@ import javax.swing.*
 
 class GamePanel : JPanel(), ActionListener, KeyListener {
 
-    private lateinit var backgroundImg: Image
-    private lateinit var gameLogic: GameLogic
-    private lateinit var placePipeTimer: Timer
-    private lateinit var gameLoop: Timer
+    private var backgroundImg: Image
+    private var gameLogic: GameLogic
+    private var placePipeTimer: Timer
+    private var gameLoop: Timer
 
     init {
         preferredSize = Dimension(360, 640)
         isFocusable = true
         addKeyListener(this)
 
-        // Загрузка ресурсов
         backgroundImg = loadImage("/background.png")
         val birdImg = loadImage("/flappybird.png")
         val topPipeImg = loadImage("/toppipe.png")
         val bottomPipeImg = loadImage("/bottompipe.png")
 
-        // Логика игры
         gameLogic = GameLogic(
             360, 640, 34, 24,
             birdImg, 64, 512, 640 / 4,
             topPipeImg, bottomPipeImg
         )
 
-        // Таймеры
         placePipeTimer = createTimer(1500) { gameLogic.addPipe() }
         gameLoop = createTimer(1000 / 60, this)
 
@@ -81,22 +77,18 @@ class GamePanel : JPanel(), ActionListener, KeyListener {
 
         g.color = Color.white
         g.font = Font("Arial", Font.PLAIN, 32)
-        g.drawString(
-            if (gameLogic.gameOver) "Game Over: ${gameLogic.score}" else "${gameLogic.score}",
-            10,
-            35
-        )
+        g.drawString("${gameLogic.score.toInt()}", 10, 35)
     }
-
-    override fun actionPerformed(e: ActionEvent) {
-        if (gameLogic.gameOver) {
-            stopGame()
-        } else {
-            gameLogic.moveBird()
-            gameLogic.movePipes()
-            repaint()
-        }
-    }
+//
+//    override fun actionPerformed(e: ActionEvent) {
+//        if (gameLogic.gameOver) {
+//            stopGame()
+//        } else {
+//            gameLogic.moveBird()
+//            gameLogic.movePipes()
+//            repaint()
+//        }
+//    }
 
     override fun keyPressed(e: KeyEvent) {
         if (e.keyCode == KeyEvent.VK_SPACE) {
@@ -104,8 +96,28 @@ class GamePanel : JPanel(), ActionListener, KeyListener {
                 gameLogic.resetGame()
                 startGame()
             } else {
-                gameLogic.speedVertical = -9
+                gameLogic.speedVertical = -7f
             }
+        }
+    }
+    override fun actionPerformed(e: ActionEvent) {
+        if (gameLogic.gameOver) {
+            stopGame()
+
+            val scaledImg = gameLogic.bird.img.getScaledInstance(64, 48, Image.SCALE_SMOOTH)
+            val birdIcon = ImageIcon(scaledImg)
+
+            JOptionPane.showMessageDialog(
+                this,
+                "Игра окончена! Ваш счёт: ${gameLogic.score.toInt()}",
+                "Конец игры",
+                JOptionPane.INFORMATION_MESSAGE,
+                birdIcon
+            )
+        } else {
+            gameLogic.moveBird()
+            gameLogic.movePipes()
+            repaint()
         }
     }
 
