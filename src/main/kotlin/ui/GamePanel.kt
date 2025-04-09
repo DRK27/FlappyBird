@@ -1,5 +1,6 @@
-package org.example
+package ui
 
+import logic.GameLogic
 import java.awt.Color
 import java.awt.Graphics
 import javax.swing.JPanel
@@ -79,16 +80,6 @@ class GamePanel : JPanel(), ActionListener, KeyListener {
         g.font = Font("Arial", Font.PLAIN, 32)
         g.drawString("${gameLogic.score.toInt()}", 10, 35)
     }
-//
-//    override fun actionPerformed(e: ActionEvent) {
-//        if (gameLogic.gameOver) {
-//            stopGame()
-//        } else {
-//            gameLogic.moveBird()
-//            gameLogic.movePipes()
-//            repaint()
-//        }
-//    }
 
     override fun keyPressed(e: KeyEvent) {
         if (e.keyCode == KeyEvent.VK_SPACE) {

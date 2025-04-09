@@ -1,5 +1,8 @@
-package org.example
+package logic
 
+import ui.Bird
+import ui.Main
+import ui.Pipe
 import java.awt.Image
 import java.util.ArrayList
 

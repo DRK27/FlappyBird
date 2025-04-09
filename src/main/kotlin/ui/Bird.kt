@@ -1,4 +1,4 @@
-package org.example
+package ui
 
 import java.awt.Image
 
