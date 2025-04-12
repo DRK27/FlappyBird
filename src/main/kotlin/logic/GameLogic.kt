@@ -17,7 +17,7 @@ class GameLogic(
     private val openingSpace: Int,
     private val topPipeImg: Image,
     private val bottomPipeImg: Image
-){
+) {
 
     private var speedHorizontal = -4
     private var gravity = 0.5f
@@ -51,6 +51,27 @@ class GameLogic(
         gameOver = false
         score = 0.0
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     fun addPipe() {
         val randomPipeY = (-boardHeight / 4 - Math.random() * (pipeHeight / 2)).toInt()

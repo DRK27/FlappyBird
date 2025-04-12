@@ -27,7 +27,7 @@ class GamePanel : JPanel(), ActionListener, KeyListener {
         val bottomPipeImg = loadImage("/bottompipe.png")
 
         gameLogic = GameLogic(
-            360, 640, 34, 24,
+            360, 640, 34, 38,
             birdImg, 64, 512, 640 / 4,
             topPipeImg, bottomPipeImg
         )
