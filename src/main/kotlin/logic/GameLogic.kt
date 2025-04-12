@@ -27,7 +27,30 @@ class GameLogic(
     val pipes: ArrayList<Pipe> = ArrayList()
     val bird = Bird(boardWidth / 8, boardHeight / 2, birdWidth, birdHeight, birdImg)
 
+    fun moveBird() {
+        speedVertical += gravity
+        bird.vertical += speedVertical.toInt()
+    }
 
+    fun movePipes() {
+        for (pipe in pipes) {
+            pipe.horizontal += speedHorizontal
+            if (!pipe.passed && bird.horizontal > pipe.horizontal + pipe.width) {
+                score += 0.5
+                pipe.passed = true
+            }
+            if (bird.checkCollision(pipe)) gameOver = true
+        }
+        if (bird.vertical > boardHeight) gameOver = true
+    }
+
+    fun resetGame() {
+        bird.resetPosition(boardHeight / 2)
+        speedVertical = 0f
+        pipes.clear()
+        gameOver = false
+        score = 0.0
+    }
 
 
 
